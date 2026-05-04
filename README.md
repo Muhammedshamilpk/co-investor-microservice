@@ -135,7 +135,7 @@ python -m pytest --cov=src
 ---
 
 ## 🎥 Demonstration
-[Link to Project Video Placeholder]
+https://drive.google.com/drive/folders/1q5ooLgk1tkRYvk8AnwXiwyQiO79HYeYx?usp=sharing
 
 ---
 
