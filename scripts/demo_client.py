@@ -15,21 +15,37 @@ def run_demo(query):
     try:
         # Use stream=True to handle Server-Sent Events (SSE)
         with requests.post(url, json=payload, stream=True) as response:
+            if response.status_code != 200:
+                print(f"\n[ERROR] Server returned status code {response.status_code}")
+                return
+
             for line in response.iter_lines():
                 if line:
                     decoded_line = line.decode('utf-8')
-                    if decoded_line.startswith("data: "):
-                        content = decoded_line[6:] # Remove 'data: ' prefix
+                    
+                    # SSE format can be 'data: content' or just 'data:content'
+                    if decoded_line.startswith("data:"):
+                        content = decoded_line.split("data:", 1)[1].strip()
+                        
                         try:
-                            # Try to parse as JSON if it's an error or structured event
+                            # Try to parse as JSON
                             data = json.loads(content)
+                            
+                            # Handle different event types
                             if "message" in data:
-                                print(f"\n[ERROR/SYSTEM]: {data['message']}")
+                                print(f"\n[SYSTEM]: {data['message']}")
+                            elif "token" in data:
+                                print(data["token"], end="", flush=True)
+                            elif "agent" in data and data.get("status") == "start":
+                                print(f"\n[{data['agent']} is thinking...]")
                         except json.JSONDecodeError:
-                            # If it's just a text chunk, print it
+                            # If it's just raw text, print it
                             print(content, end="", flush=True)
+
+            print("\n--- Stream Finished ---")
     except Exception as e:
         print(f"\nCould not connect to server: {e}")
+
 
 if __name__ == "__main__":
     print("Valura AI Demo Client")

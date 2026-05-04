@@ -77,7 +77,12 @@ class OpenAIClient(BaseLLMClient):
 class StubClient(BaseLLMClient):
     """Simulates AI streaming for testing/demos without API costs."""
     async def complete(self, messages: list[Message], **kwargs) -> str:
+        # If this is being called by the Intent Classifier, return valid JSON
+        if "intent" in str(messages[0].content):
+            return '{"intent": "portfolio_health", "agent": "portfolio_health_agent", "entities": {"tickers": ["AAPL"]}, "safety": "safe"}'
+        
         return "This is a simulated response for demo purposes."
+
 
     async def stream(self, messages: list[Message], **kwargs) -> AsyncIterator[str]:
         response = (

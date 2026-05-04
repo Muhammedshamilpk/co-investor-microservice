@@ -34,10 +34,11 @@ class SafetyGuard:
         # 2. Harmful patterns mapped to categories
         self._block_patterns: dict[str, list[re.Pattern]] = {
             "insider_trading": [
-                re.compile(r"\b(non-public|nonpublic|confidential|insider)\s+(info|information|tip)\b", re.IGNORECASE),
-                re.compile(r"\btrade\b.*\bbased\s+on\b.*\b(leaked|unreleased)\b", re.IGNORECASE),
-                re.compile(r"\b(friend|uncle|ceo|executive)\b.*\btold\s+me\b.*\bbuy\b", re.IGNORECASE),
+                re.compile(r"\b(non-public|nonpublic|confidential|insider)\b.*\b(info|information|tip|tips|advice)\b", re.IGNORECASE),
+                re.compile(r"\btrade\b.*\bbased\s+on\b.*\b(leaked|unreleased|internal)\b", re.IGNORECASE),
+                re.compile(r"\b(friend|uncle|ceo|executive|source)\b.*\btold\s+me\b.*\bbuy\b", re.IGNORECASE),
             ],
+
             "market_manipulation": [
                 re.compile(r"\b(pump\s*(and|&)\s*dump|short\s*squeeze|spoofing|wash\s*trading)\b", re.IGNORECASE),
                 re.compile(r"\b(manipulate|corner)\b.*\b(market|stock|price)\b", re.IGNORECASE),
