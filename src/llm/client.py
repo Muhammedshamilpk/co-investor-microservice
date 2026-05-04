@@ -83,8 +83,8 @@ class StubClient(BaseLLMClient):
         
         return "This is a simulated response for demo purposes."
 
-
     async def stream(self, messages: list[Message], **kwargs) -> AsyncIterator[str]:
+
         response = (
             "I've analyzed the market data for your query. "
             "Based on current trends, the asset is showing strong support at current levels. "

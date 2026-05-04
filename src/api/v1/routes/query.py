@@ -9,7 +9,7 @@ from sse_starlette.sse import EventSourceResponse
 from src.api.dependencies import IntentDep, LLMDep, RouterDep, SafetyDep
 from src.core.logging import get_logger
 from src.schemas.chat import ChatRequest
-from src.streaming.sse import stream_agent_sse
+from src.streaming.sse import stream_agent_sse, sse_dict
 
 log = get_logger(__name__)
 router = APIRouter(tags=["Query"])
@@ -73,6 +73,8 @@ async def query_endpoint(
                     log.info("client_disconnected")
                     break
                 yield chunk
+
+
 
         except asyncio.TimeoutError:
             log.error("request_timeout")

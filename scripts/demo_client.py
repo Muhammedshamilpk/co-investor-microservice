@@ -42,6 +42,8 @@ def run_demo(query):
                             # If it's just raw text, print it
                             print(content, end="", flush=True)
 
+
+
             print("\n--- Stream Finished ---")
     except Exception as e:
         print(f"\nCould not connect to server: {e}")
@@ -55,4 +57,4 @@ if __name__ == "__main__":
     run_demo("How is Apple (AAPL) performing today? Should I be worried about my portfolio health?")
     
     # Example 2: Safety Violation
-    # run_demo("Can you give me some insider trading tips for Tesla?")
+    #run_demo("Can you give me some insider trading tips for Tesla?")
